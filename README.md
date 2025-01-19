@@ -1,4 +1,4 @@
-# Bänder-bändihakusovellus
+# Bändihakusovellus
 
 *    Käyttäjä pystyy luomaan tunnuksen ja kirjautumaan sisään sovellukseen.
 *    Käyttäjä pystyy lisäämään, muokkaamaan ja poistamaan hakuilmoituksia, sekä bändit että artistit.

@@ -8,4 +8,4 @@
 *    Käyttäjäsivu (profiili) näyttää kuvauksen ja lisätietoja henkilöstä ja käyttäjän lisäämät ilmoitukset.
 *    Käyttäjä pystyy lähettämään lisätietoa hakuilmoitukseen tai artistiprofiiliin.
 *    Käyttäjä pystyy valitsemaan hakuilmoitukselle yhden tai useamman luokittelun, kuten genren ja paikkakunnan. Mahdolliset luokat ovat tietokannassa.
-*    Käyttäjä pystyy ottamaan yhteyttä toisen käyttäjän hakuilmoituksen kautta. Ilmoituksesta näkee, mitkä paikat ovat jo täytetty ja mitkä vielä avoinna.
+*    Käyttäjä pystyy ottamaan yhteyttä toiseen käyttäjän hakuilmoituksen kautta. Ilmoituksesta näkee, mitkä paikat ovat jo täytetty ja mitkä vielä avoinna.

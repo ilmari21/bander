@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Bändihaku</title>
+</head>
+
+<body>
+  <hl>Bändihaku</hl>
+
+  {% if session.username %}
+  <p>
+    Olet kirjautunut nimellä {{ session.username }}
+  </p>
+  {% endif %}
+
+  <p>
+    <a href="/login">Kirjaudu sisään</a>
+    <a href="/login">Luo tunnus</a>
+    <a href="/login">Kirjaudu ulos</a>
+  </p>
+</body>
+
+</html>

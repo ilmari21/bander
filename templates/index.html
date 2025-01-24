@@ -7,10 +7,9 @@
 
 <body>
   <hl>Bändihaku</hl>
-
   {% if session.username %}
   <p>
-    Olet kirjautunut nimellä {{ session.username }}
+    Olet kirjautunut nimellä {{ session.username }}, id-numerosi on {{ session.user_id }}
   </p>
   {% endif %}
 
@@ -18,6 +17,10 @@
     <a href="/login">Kirjaudu sisään</a>
     <a href="/login">Luo tunnus</a>
     <a href="/login">Kirjaudu ulos</a>
+  </p>
+
+  <p>
+    <a href="/new_item">Uusi ilmoitus</a>
   </p>
 </body>
 

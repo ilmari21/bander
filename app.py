@@ -14,6 +14,16 @@ def index():
     all_items = items.get_items()
     return render_template("index.html", items = all_items)
 
+@app.route("/search_item/")
+def search_item():
+    query = request.args.get("query")
+    if query:
+        results = items.search_items(query)
+    else:
+        query = ""
+        results = []
+    return render_template("search_item.html", query = query, results = results)
+
 @app.route("/item/<int:item_id>")
 def show_item(item_id):
     item = items.get_item(item_id)

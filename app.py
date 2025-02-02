@@ -14,6 +14,10 @@ def index():
     all_items = items.get_items()
     return render_template("index.html", items = all_items)
 
+def requires_login():
+    if "user_id" not in session:
+        abort(403)
+
 @app.route("/search_item/")
 def search_item():
     query = request.args.get("query")
@@ -33,10 +37,14 @@ def show_item(item_id):
 
 @app.route("/new_item")
 def new_item():
+    requires_login()
+
     return render_template("new_item.html")
 
 @app.route("/create_item", methods=["POST"])
 def create_item():
+    requires_login()
+
     title = request.form["title"]
     description = request.form["description"]
     location = request.form["location"]
@@ -48,6 +56,8 @@ def create_item():
 
 @app.route("/edit_item/<int:item_id>")
 def edit_item(item_id):
+    requires_login()
+
     item = items.get_item(item_id)
     if not item:
         abort(404)
@@ -57,6 +67,8 @@ def edit_item(item_id):
 
 @app.route("/delete_item/<int:item_id>",  methods=["GET", "POST"])
 def delete_item(item_id):
+    requires_login()
+
     item = items.get_item(item_id)
     if not item:
         abort(404)
@@ -75,6 +87,8 @@ def delete_item(item_id):
 
 @app.route("/update_item", methods=["POST"])
 def update_item():
+    requires_login()
+    
     item_id = request.form["item_id"]
     item = items.get_item(item_id)
     if not item:
@@ -134,6 +148,7 @@ def login():
 
 @app.route("/logout")
 def logout():
-    del session["user_id"]
-    del session["username"]
+    if "user_id" in session:
+        del session["user_id"]
+        del session["username"]
     return redirect("/")

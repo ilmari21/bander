@@ -103,7 +103,11 @@ def update_item():
         abort(403)
 
     title = request.form["title"]
+    if not title or len(title) > 50:
+        abort(403)
     description = request.form["description"]
+    if not description or len(description) > 50:
+        abort(403)
     location = request.form["location"]
 
     items.update_item(item_id, title, description, location)

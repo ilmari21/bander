@@ -46,8 +46,14 @@ def create_item():
     requires_login()
 
     title = request.form["title"]
+    if not title or len(title) > 50:
+        abort(403)
     description = request.form["description"]
+    if not description or len(description) > 500:
+        abort(403)
     location = request.form["location"]
+    if len(location) > 50:
+        abort(403)
     user_id = session["user_id"]
 
     items.add_item(title, description, location, user_id)
@@ -88,7 +94,7 @@ def delete_item(item_id):
 @app.route("/update_item", methods=["POST"])
 def update_item():
     requires_login()
-    
+
     item_id = request.form["item_id"]
     item = items.get_item(item_id)
     if not item:

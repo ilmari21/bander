@@ -5,6 +5,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import config
 import db
 import items
+import users
 
 app = Flask(__name__)
 app.secret_key = config.secret_key
@@ -117,6 +118,14 @@ def update_item():
 @app.route("/register")
 def register():
     return render_template("register.html")
+
+@app.route("/user/<int:user_id>")
+def show_user(user_id):
+    user = users.get_user(user_id)
+    if not user:
+        abort(404)
+    items = users.get_user_items(user_id)
+    return render_template("show_user.html", user = user, items = items)
 
 @app.route("/create", methods=["POST"])
 def create():

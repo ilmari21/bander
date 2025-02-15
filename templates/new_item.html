@@ -16,15 +16,17 @@
       Kuvaus: <br />
       <textarea name="description" rows="8" cols = "60" maxlength="500" required></textarea>
     </p>
+    {% for class in classes %}
     <p>
-      Etsitään: <br />
-      <select name="section">
+      {{ class }}: <br />
+      <select name="classes">
         <option value="">(valitse)</option>
-        <option value="yhtye">yhtye</option>
-        <option value="laulaja">laulaja</option>
-        <option value="soittaja">soittaja</option>
+      {% for option in classes[class] %}
+        <option value="{{ class }}:{{ option }}">{{ option }}</option>
+      {% endfor %}
       </select>
     </p>
+    {% endfor %}
     <p>
       Paikkakunta: <br />
       <input type="text" name="location" size="35" maxlength="50"/>

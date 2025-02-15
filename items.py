@@ -32,6 +32,18 @@ def get_classes(item_id):
     sql = "SELECT title, value FROM item_classes WHERE item_id = ?"
     return db.query(sql, [item_id])
 
+def get_all_classes():
+    sql = "SELECT title, value FROM classes ORDER BY id"
+    result = db.query(sql)
+
+    classes = {}
+    for title, value in result:
+        classes[title] = []
+    for title, value in result:
+        classes[title].append(value)
+
+    return classes
+
 def update_item(item_id, title, description, location):
     sql = """UPDATE items SET title = ?,
                               description = ?,

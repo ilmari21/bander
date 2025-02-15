@@ -57,11 +57,17 @@ def create_item():
         abort(403)
     user_id = session["user_id"]
 
+    all_classes = items.get_all_classes()
+
     classes = []
     for entry in request.form.getlist("classes"):
         if entry:
-            parts = entry.split(":")
-            classes.append((parts[0], parts[1]))
+            class_title, class_value = entry.split(":")
+            if class_title not in all_classes:
+                abort(403)
+            if class_value not in all_classes[class_title]:
+                abort(403)
+            classes.append((class_title, class_value))
 
     items.add_item(title, description, location, user_id, classes)
 
@@ -78,6 +84,7 @@ def edit_item(item_id):
         abort(403)
 
     all_classes = items.get_all_classes()
+
     classes = {}
     for item_class in all_classes:
         classes[item_class] = ""
@@ -98,7 +105,7 @@ def delete_item(item_id):
 
     if request.method == "GET":
         return render_template("delete_item.html", item = item)
-    
+
     if request.method == "POST":
         if "delete" in request.form:
             items.delete_item(item_id)
@@ -125,11 +132,17 @@ def update_item():
         abort(403)
     location = request.form["location"]
 
+    all_classes = items.get_all_classes()
+
     classes = []
     for entry in request.form.getlist("classes"):
         if entry:
-            parts = entry.split(":")
-            classes.append((parts[0], parts[1]))
+            class_title, class_value = entry.split(":")
+            if class_title not in all_classes:
+                abort(403)
+            if class_value not in all_classes[class_title]:
+                abort(403)
+            classes.append((class_title, class_value))
 
     items.update_item(item_id, title, description, location, classes)
 

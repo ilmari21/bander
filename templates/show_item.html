@@ -32,7 +32,7 @@
     </ul>
   </p>
   {% endif %}
-  {% if applications %}
+  {% if applications and session.user_id == item.user_id %}
   <h2>Hakemukset</h2>
   <ul>
     {% for application in applications %}

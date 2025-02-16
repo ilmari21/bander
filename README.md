@@ -1,5 +1,7 @@
 # Bändihakusovellus
 
+HUOM! Muista alustaa database.db tiedostojen schema.sql ja init.sql sisällöllä!
+
 Sovelluksen tämänhetkiset toiminnot:
 *    Käyttäjä pystyy luomaan tunnuksen ja kirjautumaan sisään sovellukseen.
 *    Käyttäjä pystyy lisäämään, muokkaamaan ja poistamaan hakuilmoituksia.
@@ -9,7 +11,6 @@ Sovelluksen tämänhetkiset toiminnot:
 *    Käyttäjä pystyy jättämään hakemukseen ilmoituksen; omiin ilmoituksiin ei voi jättää hakemuksia.
 *    Käyttäjä voi nähdä ilmoitukseen jätetyt hakemukset; vain ilmoituksen luonut käyttäjä näkee jätetyt hakemukset.
 *    Käyttäjäillä on käyttäjäsivut, joista näkee luodut ilmoitukset ja tilastoja.
-
 
 Sovelluksen tavoite sisältää ainakin seuraavat toiminnallisuudet:
 *    Sovelluksen tarkoitus on saattaa bändit ja solistit sekä soittimien soittajat yhteen. Sekä bändit että mahdolliset jäsenet voivat julkaista hakuilmoituksia.

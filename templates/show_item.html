@@ -36,15 +36,21 @@
   <h2>Hakemukset</h2>
   <ul>
     {% for application in applications %}
-    <li>{{ application.description }}, <a href="/user/{{ application.user_id }}">{{ application.username }}</a></li>
+    <li><a href="/application/{{ application.id }}">{{ application.title }}</a>, <a href="/user/{{ application.user_id }}">{{ application.username }}</a></li>
     {% endfor %}
   </ul>
   {% endif %}
   {% if session.user_id != item.user_id %}
   <h2>Uusi hakemus</h2>
   <form action="/create_application" method="post">
+    <p>
+    Otsikko: <br />
+    <input type="text" name="application_title" maxlength="50" required/>
+    </p>
+    <p>
     Hakemuksen kuvaus: <br />
     <textarea name="application_desc" rows="8" cols = "60" maxlength="300" required></textarea> <br />
+    </p>
     <input type="hidden" name="item_id" value="{{ item.id }}">
     <input type="submit" value="Jätä hakemus"/>
   </form>

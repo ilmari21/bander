@@ -27,7 +27,8 @@ CREATE TABLE item_classes (
 
 CREATE TABLE applications (
     id INTEGER PRIMARY KEY,
+    title TEXT,
+    description TEXT,
     item_id INTEGER REFERENCES items,
-    user_id INTEGER REFERENCES users,
-    description TEXT
+    user_id INTEGER REFERENCES users
 );

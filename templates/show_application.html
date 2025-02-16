@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>{{ application.title }}</title>
+</head>
+
+<body>
+  <p>
+    Otsikko: {{ application.title }}
+  </p>
+  <p>
+    Kuvaus: {{ application.description }}
+  </p>
+  <p>
+    Hakemuksen lähettäjä: <a href="/user/{{ application.user_id }}">{{ application.username }}</a>
+  </p>
+  <p>
+    <a href="/">Takaisin</a>
+  </p>
+</body>
+
+</html>

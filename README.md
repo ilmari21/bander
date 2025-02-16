@@ -6,6 +6,9 @@ Sovelluksen tämänhetkiset toiminnot:
 *    Käyttäjä näkee sovellukseen lisätyt hakuilmoitukset.
 *    Käyttäjä pystyy etsimään ilmoituksia hakusanalla.
 *    Käyttäjä pystyy valitsemaan hakuilmoitukselle paikkakunnan.
+*    Käyttäjä pystyy jättämään hakemukseen ilmoituksen; omiin ilmoituksiin ei voi jättää hakemuksia.
+*    Käyttäjä voi nähdä ilmoitukseen jätetyt hakemukset; vain ilmoituksen luonut käyttäjä näkee jätetyt hakemukset.
+*    Käyttäjäillä on käyttäjäsivut, joista näkee luodut ilmoitukset ja tilastoja.
 
 
 Sovelluksen tavoite sisältää ainakin seuraavat toiminnallisuudet:

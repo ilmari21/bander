@@ -33,7 +33,8 @@ def show_item(item_id):
     if not item:
         abort(404)
     classes = items.get_classes(item_id)
-    return render_template("show_item.html", item = item, classes = classes)
+    applications = items.get_applications(item_id)
+    return render_template("show_item.html", item = item, classes = classes, applications = applications)
 
 @app.route("/new_item")
 def new_item():
@@ -71,6 +72,23 @@ def create_item():
     items.add_item(title, description, location, user_id, classes)
 
     return redirect("/")
+
+@app.route("/create_application", methods=["POST"])
+def create_application():
+    requires_login()
+
+    application_desc = request.form["application_desc"]
+    if not application_desc or len(application_desc) > 500:
+        abort(403)
+    item_id = request.form["item_id"]
+    item = items.get_item(item_id)
+    if not item:
+        abort(403)
+    user_id = session["user_id"]
+
+    items.add_application(item_id, user_id, application_desc)
+
+    return redirect("/item/" + str(item_id))
 
 @app.route("/edit_item/<int:item_id>")
 def edit_item(item_id):

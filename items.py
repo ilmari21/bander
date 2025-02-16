@@ -10,10 +10,20 @@ def add_item(title, description, location, user_id, classes):
     for title, value in classes:
         db.execute(sql, [item_id, title, value])
 
+def add_application(item_id, user_id, application_desc):
+    sql = """INSERT INTO applications (item_id, user_id, description) VALUES (?, ?, ?)"""
+    db.execute(sql, [item_id, user_id, application_desc])
 
 def get_items():
     sql = "SELECT id, title FROM items ORDER BY id DESC"
     return db.query(sql)
+
+def get_applications(item_id):
+    sql = """SELECT applications.description, users.id, users.username
+             FROM applications, users
+             WHERE applications.item_id = ? AND applications.user_id = users.id
+             ORDER BY applications.id DESC"""
+    return db.query(sql, [item_id])
 
 def get_item(item_id):
     sql = """SELECT items.id,

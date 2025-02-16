@@ -24,3 +24,10 @@ CREATE TABLE item_classes (
     title TEXT,
     value TEXT
 );
+
+CREATE TABLE applications (
+    id INTEGER PRIMARY KEY,
+    item_id INTEGER REFERENCES items,
+    user_id INTEGER REFERENCES users,
+    description TEXT
+);

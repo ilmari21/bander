@@ -32,12 +32,15 @@
     </ul>
   </p>
   {% endif %}
+  {% if applications %}
   <h2>Hakemukset</h2>
   <ul>
     {% for application in applications %}
     <li>{{ application.description }}, <a href="/user/{{ application.user_id }}">{{ application.username }}</a></li>
     {% endfor %}
   </ul>
+  {% endif %}
+  {% if session.user_id != item.user_id %}
   <h2>Uusi hakemus</h2>
   <form action="/create_application" method="post">
     Hakemuksen kuvaus: <br />
@@ -45,6 +48,7 @@
     <input type="hidden" name="item_id" value="{{ item.id }}">
     <input type="submit" value="Jätä hakemus"/>
   </form>
+  {% endif %}
   <p>
     <a href="/">Takaisin</a>
   </p>

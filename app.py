@@ -33,17 +33,18 @@ def show_item(item_id):
     if not item:
         abort(404)
     classes = items.get_classes(item_id)
-    applications = items.get_application(item_id)
+    applications = items.get_applications(item_id)
     return render_template("show_item.html", item = item, classes = classes, applications = applications)
 
 @app.route("/application/<int:application_id>")
 def show_application(application_id):
+    print(f"application id: {application_id}")
     application = items.get_application(application_id)
     if application:
         application = application[0]
     else:
         abort(404)
-    return render_template("show_application.html", application=application)
+    return render_template("show_application.html", application = application)
 
 @app.route("/new_item")
 def new_item():

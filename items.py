@@ -18,9 +18,9 @@ def get_items():
     sql = "SELECT id, title FROM items ORDER BY id DESC"
     return db.query(sql)
 
-def get_applications():
-    sql = "SELECT id, title FROM applications ORDER BY id DESC"
-    return db.query(sql)
+def get_applications(item_id):
+    sql = """SELECT id, title FROM applications WHERE item_id = ? ORDER BY id DESC"""
+    return db.query(sql, [item_id])
 
 def get_application(application_id):
     sql = """SELECT applications.id,
@@ -29,7 +29,7 @@ def get_application(application_id):
                     users.id user_id,
                     users.username
              FROM applications, users
-             WHERE applications.item_id = ? AND 
+             WHERE applications.id = ? AND
                    applications.user_id = users.id
              ORDER BY applications.id DESC"""
     return db.query(sql, [application_id])

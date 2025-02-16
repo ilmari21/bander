@@ -2,7 +2,6 @@ import sqlite3
 from flask import Flask
 from flask import redirect, render_template, request, session, abort
 import config
-import db
 import items
 import users
 
@@ -157,8 +156,7 @@ def show_user(user_id):
     user = users.get_user(user_id)
     if not user:
         abort(404)
-    items = users.get_user_items(user_id)
-    return render_template("show_user.html", user = user, items = items)
+    return render_template("show_user.html", user = user, items = users.get_user_items(user_id))
 
 @app.route("/create", methods=["POST"])
 def create():
@@ -167,12 +165,12 @@ def create():
     password2 = request.form["password2"]
     if password1 != password2:
         return "VIRHE: salasanat eivät ole samat"
-    
+
     try:
         users.create_user(username, password1)
     except sqlite3.IntegrityError:
         return "VIRHE: tunnus on jo varattu"
-    
+
     return "Tunnus luotu"
 
 @app.route("/login", methods=["GET", "POST"])

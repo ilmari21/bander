@@ -78,6 +78,8 @@ def update_item(item_id, title, description, location, classes):
         db.execute(sql, [item_id, title, value])
 
 def delete_item(item_id):
+    sql = "DELETE FROM applications WHERE item_id = ?"
+    db.execute(sql, [item_id])
     sql = """DELETE FROM item_classes WHERE item_id = ?"""
     db.execute(sql, [item_id])
     sql = """DELETE FROM items WHERE id = ?"""

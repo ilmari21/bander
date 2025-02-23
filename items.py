@@ -63,6 +63,19 @@ def get_all_classes():
 
     return classes
 
+def get_sound_samples(item_id):
+    sql = "SELECT id FROM sound_samples WHERE item_id = ?"
+    return db.query(sql, [item_id])
+
+def add_sound_sample(item_id, sound_sample):
+    sql = "INSERT INTO sound_samples (item_id, sound_sample) VALUES (?, ?)"
+    db.execute(sql, [item_id, sound_sample])
+
+def get_sound_sample(sound_sample_id):
+    sql = "SELECT sound_sample FROM sound_samples WHERE id = ?"
+    result = db.query(sql, [sound_sample_id])
+    return result[0][0] if result else None
+
 def update_item(item_id, title, description, location, classes):
     sql = """UPDATE items SET title = ?,
                               description = ?,
@@ -78,6 +91,8 @@ def update_item(item_id, title, description, location, classes):
         db.execute(sql, [item_id, title, value])
 
 def delete_item(item_id):
+    sql = "DELETE FROM sound_samples WHERE item_id = ?"
+    db.execute(sql, [item_id])
     sql = "DELETE FROM applications WHERE item_id = ?"
     db.execute(sql, [item_id])
     sql = """DELETE FROM item_classes WHERE item_id = ?"""

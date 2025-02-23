@@ -11,6 +11,7 @@
   <p>
     <a href="/edit_item/{{ item.id }}">Muokkaa ilmoitusta</a>
     <a href="/delete_item/{{ item.id }}">Poista ilmoitus</a>
+    <a href="/sound_samples/{{ item.id }}">Ääninäytteet</a>
   </p>
   {% endif %}
   <p>
@@ -19,6 +20,16 @@
   <p>
     Paikkakunta: {{ item.location }}
   </p>
+  {% if sound_samples %}
+  <p>
+    Ääninäytteet
+  </p>
+  {% endif %}
+  {% for sound_sample in sound_samples %}
+  <audio controls>
+    <source src="/sound_sample/{{ sound_sample.id }}" type="audio/wav">
+  </audio> <br />
+  {% endfor %}
   <p>
     Ilmoittaja: <a href="/user/{{ item.user_id }}">{{ item.username }}</a>
   </p>

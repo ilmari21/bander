@@ -1,6 +1,6 @@
 import sqlite3
 from flask import Flask
-from flask import redirect, render_template, request, session, abort
+from flask import redirect, render_template, request, session, abort, make_response
 import config
 import items
 import users
@@ -34,7 +34,19 @@ def show_item(item_id):
         abort(404)
     classes = items.get_classes(item_id)
     applications = items.get_applications(item_id)
-    return render_template("show_item.html", item = item, classes = classes, applications = applications)
+    sound_samples = items.get_sound_samples(item_id)
+    return render_template("show_item.html", item = item, classes = classes, applications = applications, sound_samples = sound_samples)
+
+@app.route("/sound_sample/<int:sound_sample_id>")
+def show_sound_sample(sound_sample_id):
+    sound_sample = items.get_sound_sample(sound_sample_id)
+    if not sound_sample:
+        abort(404)
+
+    response = make_response(bytes(sound_sample))
+    response.headers.set("Content-Type", "audio/wav")
+    return response
+
 
 @app.route("/application/<int:application_id>")
 def show_application(application_id):
@@ -122,6 +134,43 @@ def edit_item(item_id):
         classes[entry["title"]] = entry["value"]
 
     return render_template("edit_item.html", item = item, classes = classes, all_classes = all_classes)
+
+@app.route("/sound_samples/<int:item_id>")
+def edit_sound_samples(item_id):
+    requires_login()
+
+    item = items.get_item(item_id)
+    if not item:
+        abort(404)
+    if item["user_id"] != session["user_id"]:
+        abort(403)
+
+    sound_samples = items.get_sound_samples(item_id)
+
+    return render_template("sound_samples.html", item = item, sound_samples = sound_samples)
+
+@app.route("/add_sound_sample", methods=["POST"])
+def add_sound_sample():
+    requires_login()
+
+    item_id = request.form["item_id"]
+    item = items.get_item(item_id)
+    if not item:
+        abort(404)
+    if item["user_id"] != session["user_id"]:
+        abort(403)
+
+    file = request.files["sound_sample"]
+    if not file.filename.endswith(".wav"):
+        return "VIRHE: väärä tiedostomuoto"
+
+    sound_sample = file.read()
+    # if len(sound_sample) > 100 * 1024:
+    #     return "VIRHE: liian suuri ääniraita"
+
+    items.add_sound_sample(item_id, sound_sample)
+    return redirect("/sound_samples/" + str(item_id))
+
 
 @app.route("/delete_item/<int:item_id>",  methods=["GET", "POST"])
 def delete_item(item_id):

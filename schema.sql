@@ -32,3 +32,9 @@ CREATE TABLE applications (
     item_id INTEGER REFERENCES items,
     user_id INTEGER REFERENCES users
 );
+
+CREATE TABLE sound_samples (
+    id INTEGER PRIMARY KEY,
+    item_id INTEGER REFERENCES items,
+    sound_sample BLOB
+);

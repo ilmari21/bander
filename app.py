@@ -171,6 +171,21 @@ def add_sound_sample():
     items.add_sound_sample(item_id, sound_sample)
     return redirect("/sound_samples/" + str(item_id))
 
+@app.route("/delete_sound_samples", methods=["POST"])
+def delete_sound_samples():
+    requires_login()
+
+    item_id = request.form["item_id"]
+    item = items.get_item(item_id)
+    if not item:
+        abort(404)
+    if item["user_id"] != session["user_id"]:
+        abort(403)
+
+    for sound_sample_id in request.form.getlist("sound_sample_id"):
+        items.remove_sound_sample(item_id, sound_sample_id)
+
+    return redirect("/sound_samples/" + str(item_id))
 
 @app.route("/delete_item/<int:item_id>",  methods=["GET", "POST"])
 def delete_item(item_id):

@@ -28,7 +28,8 @@
   {% for sound_sample in sound_samples %}
   <audio controls>
     <source src="/sound_sample/{{ sound_sample.id }}" type="audio/wav">
-  </audio> <br />
+  </audio>
+  <br />
   {% endfor %}
   <p>
     Ilmoittaja: <a href="/user/{{ item.user_id }}">{{ item.username }}</a>

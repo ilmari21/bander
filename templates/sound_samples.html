@@ -12,6 +12,20 @@
     Ilmoituksessa on {{ sound_samples | count }} ääniraitaa.
   </p>
 
+  <form action="/delete_sound_samples" method="post">
+    {% for sound_sample in sound_samples %}
+    <input type="checkbox" name="sound_sample_id" value="{{ sound_sample.id }}">
+    <audio controls>
+      <source src="/sound_sample/{{ sound_sample.id }}" type="audio/wav">
+    </audio>
+    <br />
+    {% endfor %}
+    <input type="hidden" name="item_id" value="{{ item.id }}"/>
+    <p>
+      <input type="submit" value="Poista valitut"/>
+    </p>
+  </form>
+
   <h2>Lisää uusi ääniraita</h2>
   <form action="/add_sound_sample" method="post" enctype="multipart/form-data">
     <p>

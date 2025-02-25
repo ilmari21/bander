@@ -76,6 +76,10 @@ def get_sound_sample(sound_sample_id):
     result = db.query(sql, [sound_sample_id])
     return result[0][0] if result else None
 
+def remove_sound_sample(item_id, sound_sample_id):
+    sql = "DELETE FROM sound_samples WHERE id = ? AND item_id = ?"
+    db.execute(sql, [sound_sample_id, item_id])
+
 def update_item(item_id, title, description, location, classes):
     sql = """UPDATE items SET title = ?,
                               description = ?,

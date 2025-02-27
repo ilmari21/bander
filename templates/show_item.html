@@ -42,7 +42,7 @@
   {% endfor %}
 </ul>
 {% endif %}
-{% if session.user_id != item.user_id %}
+{% if session.user_id and session.user_id != item.user_id %}
 <h3>Ota yhteyttä</h3>
 <form action="/create_application" method="post">
   <p>

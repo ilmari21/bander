@@ -259,7 +259,11 @@ def show_user(user_id):
 @app.route("/create", methods=["POST"])
 def create():
     username = request.form["username"]
+    if not username or len(username) > 20:
+        abort(403)
     password1 = request.form["password1"]
+    if not password1 or len(password1) > 20:
+        abort(403)
     password2 = request.form["password2"]
     if password1 != password2:
         return "VIRHE: salasanat eivät ole samat"
@@ -278,7 +282,11 @@ def login():
 
     if request.method == "POST":
         username = request.form["username"]
+        if not username or len(username) > 20:
+            abort(403)
         password = request.form["password"]
+        if not password or len(password) > 20:
+            abort(403)
 
         user_id = users.check_login(username, password)
 

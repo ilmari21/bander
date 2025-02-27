@@ -15,7 +15,10 @@ def add_application(title, description, user_id, item_id):
     db.execute(sql, [title, description, user_id, item_id])
 
 def get_items():
-    sql = "SELECT id, title FROM items ORDER BY id DESC"
+    sql = """SELECT items.id, items.title, users.id user_id, users.username
+             FROM items, users
+             WHERE items.user_id = users.id
+             ORDER BY items.id DESC"""
     return db.query(sql)
 
 def get_applications(item_id):

@@ -222,7 +222,7 @@ def update_item():
     if not title or len(title) > 50:
         abort(403)
     description = request.form["description"]
-    if not description or len(description) > 50:
+    if not description or len(description) > 500:
         abort(403)
     location = request.form["location"]
 

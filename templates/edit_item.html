@@ -3,7 +3,8 @@
 {% block title %}Muokkaa ilmoitusta{% endblock %}
 
 {% block content %}
-<h2>Muokkaa ilmoitusta</h2>
+<h2>{{ item.title }}</h2>
+<h3>Muokkaa ilmoitusta</h3>
 <form action="/update_item" method="post">
   <p>
     Otsikko: <br />
@@ -33,10 +34,7 @@
     <input type="text" name="location" size="35" value="{{ item.location }}" maxlength="50"/>
   </p>
   <input type="hidden" name="item_id" value="{{ item.id }}"/>
-  <input type="submit" value="Päivitä ilmoitus"/>
+  <input type="submit" name="update" value="Päivitä ilmoitus"/>
+  <input type="submit" name="return" value="Palaa takaisin">
 </form>
-
-<p>
-  <a href="/item/{{ item.id }}">Takaisin</a>
-</p>
 {% endblock %}

@@ -29,6 +29,7 @@ def get_application(application_id):
     sql = """SELECT applications.id,
                     applications.title,
                     applications.description,
+                    applications.item_id,
                     users.id user_id,
                     users.username
              FROM applications, users

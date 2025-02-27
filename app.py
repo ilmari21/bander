@@ -240,9 +240,12 @@ def update_item():
                 abort(403)
             classes.append((class_title, class_value))
 
-    items.update_item(item_id, title, description, location, classes)
-
-    return redirect("/item/" + str(item_id))
+    if request.method == "POST":
+        if "update" in request.form:
+            items.update_item(item_id, title, description, location, classes)
+            return redirect("/item/" + str(item_id))
+        else:
+            return redirect("/item/" + str(item_id))
 
 @app.route("/register")
 def register():

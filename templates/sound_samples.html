@@ -3,8 +3,10 @@
 {% block title %}Ilmoituksen ääninäytteet{% endblock %}
 
 {% block content %}
-<h2>Ilmoituksen ääninäytteet</h2>
+<h2>{{ item.title }}</h2>
+<h3>Ilmoituksen ääninäytteet</h3>
 
+{% if sound_samples %}
 <p>
   Ilmoituksessa on {{ sound_samples | count }} ääniraitaa.
 </p>
@@ -22,6 +24,7 @@
     <input type="submit" value="Poista valitut"/>
   </p>
 </form>
+{% endif %}
 
 <h2>Lisää uusi ääniraita</h2>
 <form action="/add_sound_sample" method="post" enctype="multipart/form-data">
@@ -33,6 +36,6 @@
 </form>
 
 <p>
-  <a href="/item/{{ item.id }}">Takaisin</a>
+  <a href="/item/{{ item.id }}">Takaisin ilmoitukseen</a>
 </p>
 {% endblock %}

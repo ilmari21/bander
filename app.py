@@ -51,7 +51,6 @@ def show_sound_sample(sound_sample_id):
 
 @app.route("/application/<int:application_id>")
 def show_application(application_id):
-    print(f"application id: {application_id}")
     application = items.get_application(application_id)
     if application:
         application = application[0]

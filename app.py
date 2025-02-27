@@ -4,6 +4,7 @@ from flask import redirect, render_template, request, session, abort, make_respo
 import config
 import items
 import users
+import db
 
 app = Flask(__name__)
 app.secret_key = config.secret_key
@@ -93,7 +94,9 @@ def create_item():
 
     items.add_item(title, description, location, user_id, classes)
 
-    return redirect("/")
+    item_id = db.last_insert_id()
+
+    return redirect("/item/" + str(item_id))
 
 @app.route("/create_application", methods=["POST"])
 def create_application():

@@ -28,6 +28,7 @@
     Paikkakunta: <br />
     <input type="text" name="location" size="35" maxlength="50"/>
   </p>
+  <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
   <input type="submit" value="Luo ilmoitus"/>
 </form>
 {% endblock %}

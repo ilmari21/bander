@@ -20,6 +20,7 @@
   <br />
   {% endfor %}
   <input type="hidden" name="item_id" value="{{ item.id }}"/>
+  <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
   <p>
     <input type="submit" value="Poista valitut"/>
   </p>
@@ -32,6 +33,7 @@
     Ääniraita: <input type="file" name="sound_sample" accept=".wav"/>
   </p>
   <input type="hidden" name="item_id" value="{{ item.id }}"/>
+  <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
   <input type="submit" value="Lähetä"/>
 </form>
 

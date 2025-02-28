@@ -34,6 +34,7 @@
     <input type="text" name="location" size="35" value="{{ item.location }}" maxlength="50"/>
   </p>
   <input type="hidden" name="item_id" value="{{ item.id }}"/>
+  <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
   <input type="submit" name="update" value="Päivitä ilmoitus"/>
   <input type="submit" name="return" value="Palaa takaisin">
 </form>

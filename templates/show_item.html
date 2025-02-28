@@ -15,7 +15,9 @@
   {{ item.description }}
 </p>
 <ul>
+  {% if item.location %}
   <li>Paikkakunta: {{ item.location }}</li>
+  {% endif %}
   <li>Ilmoittaja: <a href="/user/{{ item.user_id }}">{{ item.username }}</a></li>
 {% if classes %}
   {% for class in classes %}
@@ -54,6 +56,7 @@
   <textarea name="application_desc" rows="8" cols = "60" maxlength="300" required></textarea> <br />
   </p>
   <input type="hidden" name="item_id" value="{{ item.id }}">
+  <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
   <input type="submit" value="Jätä hakemus"/>
 </form>
 {% endif %}

@@ -5,18 +5,25 @@ import config
 import items
 import users
 import db
+import secrets
 
 app = Flask(__name__)
 app.secret_key = config.secret_key
+
+def requires_login():
+    if "user_id" not in session:
+        abort(403)
+
+def check_csrf():
+    if "csrf_token" not in request.form:
+        abort(403)
+    if request.form["csrf_token"] != session["csrf_token"]:
+        abort(403)
 
 @app.route("/")
 def index():
     all_items = items.get_items()
     return render_template("index.html", items = all_items)
-
-def requires_login():
-    if "user_id" not in session:
-        abort(403)
 
 @app.route("/search_item/")
 def search_item():
@@ -67,6 +74,7 @@ def new_item():
 @app.route("/create_item", methods=["POST"])
 def create_item():
     requires_login()
+    check_csrf()
 
     title = request.form["title"]
     if not title or len(title) > 50:
@@ -100,6 +108,7 @@ def create_item():
 @app.route("/create_application", methods=["POST"])
 def create_application():
     requires_login()
+    check_csrf()
 
     description = request.form["application_desc"]
     if not description or len(description) > 500:
@@ -162,6 +171,7 @@ def edit_sound_samples(item_id):
 @app.route("/add_sound_sample", methods=["POST"])
 def add_sound_sample():
     requires_login()
+    check_csrf()
 
     item_id = request.form["item_id"]
     item = items.get_item(item_id)
@@ -186,6 +196,7 @@ def add_sound_sample():
 @app.route("/delete_sound_samples", methods=["POST"])
 def delete_sound_samples():
     requires_login()
+    check_csrf()
 
     item_id = request.form["item_id"]
     item = items.get_item(item_id)
@@ -213,6 +224,7 @@ def delete_item(item_id):
         return render_template("delete_item.html", item = item)
 
     if request.method == "POST":
+        check_csrf()
         if "delete" in request.form:
             items.delete_item(item_id)
             return redirect("/")
@@ -222,6 +234,7 @@ def delete_item(item_id):
 @app.route("/update_item", methods=["POST"])
 def update_item():
     requires_login()
+    check_csrf()
 
     item_id = request.form["item_id"]
     item = items.get_item(item_id)
@@ -308,6 +321,7 @@ def login():
         if user_id:
             session["user_id"] = user_id
             session["username"] = username
+            session["csrf_token"] = secrets.token_hex(16)
             return redirect("/")
         else:
             flash("VIRHE: väärä tunnus tai salasana")

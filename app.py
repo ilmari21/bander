@@ -1,6 +1,6 @@
 import sqlite3
 from flask import Flask
-from flask import redirect, render_template, request, session, abort, make_response
+from flask import redirect, render_template, request, session, abort, make_response, flash
 import config
 import items
 import users
@@ -103,14 +103,22 @@ def create_application():
 
     description = request.form["application_desc"]
     if not description or len(description) > 500:
-        abort(403)
+        if description:
+            flash("VIRHE: Kuvaus liian pitkä")
+        else:
+            flash("VIRHE: Ei kuvausta")
+        return redirect("/item/" + str(item_id))
     title = request.form["application_title"]
     if not title or len(title) > 50:
-        abort(403)
+        if title:
+            flash("VIRHE: Otsikko liian pitkä")
+        else:
+            flash("VIRHE: Ei otsikkoa")
+        return redirect("/item/" + str(item_id))
     item_id = request.form["item_id"]
     item = items.get_item(item_id)
     if not item:
-        abort(403)
+        abort(404)
     user_id = session["user_id"]
 
     items.add_application(title, description, user_id, item_id)
@@ -268,14 +276,17 @@ def create():
         abort(403)
     password2 = request.form["password2"]
     if password1 != password2:
-        return "VIRHE: salasanat eivät ole samat"
+        flash("VIRHE: salasanat eivät ole samat")
+        return redirect("/register")
 
     try:
         users.create_user(username, password1)
     except sqlite3.IntegrityError:
-        return "VIRHE: tunnus on jo varattu"
+        flash("VIRHE: tunnus on jo varattu")
+        return redirect("/register")
 
-    return "Tunnus luotu"
+    flash("Tunnus luotu")
+    return redirect("/")
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -297,7 +308,8 @@ def login():
             session["username"] = username
             return redirect("/")
         else:
-            return "VIRHE: väärä tunnus tai salasana"
+            flash("VIRHE: väärä tunnus tai salasana")
+            return redirect("/login")
 
 @app.route("/logout")
 def logout():

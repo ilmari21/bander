@@ -104,16 +104,16 @@ def create_application():
     description = request.form["application_desc"]
     if not description or len(description) > 500:
         if description:
-            flash("VIRHE: Kuvaus liian pitkä")
+            flash("VIRHE: kuvaus liian pitkä")
         else:
-            flash("VIRHE: Ei kuvausta")
+            flash("VIRHE: ei kuvausta")
         return redirect("/item/" + str(item_id))
     title = request.form["application_title"]
     if not title or len(title) > 50:
         if title:
-            flash("VIRHE: Otsikko liian pitkä")
+            flash("VIRHE: otsikko liian pitkä")
         else:
-            flash("VIRHE: Ei otsikkoa")
+            flash("VIRHE: ei otsikkoa")
         return redirect("/item/" + str(item_id))
     item_id = request.form["item_id"]
     item = items.get_item(item_id)
@@ -172,11 +172,13 @@ def add_sound_sample():
 
     file = request.files["sound_sample"]
     if not file.filename.endswith(".wav"):
-        return "VIRHE: väärä tiedostomuoto"
+        flash("VIRHE: väärä tiedostomuoto")
+        return redirect("/sound_samples/" + str(item_id))
 
     sound_sample = file.read()
     # if len(sound_sample) > 100 * 1024:
-    #     return "VIRHE: liian suuri ääniraita"
+    #    flash("VIRHE: väärä tiedostomuoto")
+    #    return redirect("/sound_samples/" + str(item_id))
 
     items.add_sound_sample(item_id, sound_sample)
     return redirect("/sound_samples/" + str(item_id))

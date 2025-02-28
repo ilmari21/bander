@@ -103,15 +103,19 @@ def delete_item(item_id):
     db.execute(sql, [item_id])
     sql = "DELETE FROM applications WHERE item_id = ?"
     db.execute(sql, [item_id])
-    sql = """DELETE FROM item_classes WHERE item_id = ?"""
+    sql = "DELETE FROM item_classes WHERE item_id = ?"
     db.execute(sql, [item_id])
-    sql = """DELETE FROM items WHERE id = ?"""
+    sql = "DELETE FROM items WHERE id = ?"
     db.execute(sql, [item_id])
 
 def search_items(query):
-    sql = """SELECT id, title
+    sql = """SELECT items.id,
+                    items.title,
+                    users.id,
+                    users.username
              FROM items
+             JOIN users ON items.user_id = users.id
              WHERE title LIKE ? OR description LIKE ?
-             ORDER BY id DESC"""
+             ORDER BY items.id DESC"""
     like = "%" + query + "%"
     return db.query(sql, [like, like])

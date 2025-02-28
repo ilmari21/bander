@@ -269,7 +269,7 @@ def show_user(user_id):
 @app.route("/create", methods=["POST"])
 def create():
     username = request.form["username"]
-    if not username or len(username) > 20:
+    if not username or len(username) > 30:
         abort(403)
     password1 = request.form["password1"]
     if not password1 or len(password1) > 20:

@@ -48,12 +48,12 @@
 <h3>Ota yhteyttä</h3>
 <form action="/create_application" method="post">
   <p>
-  Otsikko: <br />
-  <input type="text" name="application_title" maxlength="50" required/>
+  <label for="application_title">Viestin otsikko</label>: <br />
+  <input type="text" name="application_title" id="application_title" maxlength="50" required/>
   </p>
   <p>
-  Viesti: <br />
-  <textarea name="application_desc" rows="8" cols = "60" maxlength="300" required></textarea> <br />
+  <label for ="application_desc">Viesti</label>: <br />
+  <textarea name="application_desc" id="application_desc" rows="8" cols = "60" maxlength="300" required></textarea> <br />
   </p>
   <input type="hidden" name="item_id" value="{{ item.id }}">
   <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />

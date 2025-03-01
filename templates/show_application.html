@@ -5,7 +5,7 @@
 {% block content %}
 <h2>{{ application.title }}</h2>
 <p>
-  {{ application.description }}
+  {{ application.description | show_lines }}
 </p>
 <p>
   Hakemuksen lähettäjä: <a href="/user/{{ application.user_id }}">{{ application.username }}</a>

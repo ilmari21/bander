@@ -12,7 +12,7 @@
 </p>
 {% endif %}
 <p>
-  {{ item.description }}
+  {{ item.description | show_lines }}
 </p>
 <ul>
   {% if item.location %}

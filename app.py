@@ -85,23 +85,19 @@ def create_item():
 
     title = request.form["title"]
     if not title or len(title) > 50:
-        if title:
-            flash("VIRHE: otsikko liian pitkä")
-            return redirect("/new_item/")
-        flash("VIRHE: ei otsikkoa")
+        flash("VIRHE: otsikko liian pitkä" if title else "VIRHE: ei otsikkoa")
         return redirect("/new_item/")
+
     description = request.form["description"]
     if not description or len(description) > 500:
-        if description:
-            flash("VIRHE: kuvaus liian pitkä")
-            return redirect("/new_item/")
-        flash("VIRHE: ei kuvausta")
+        flash("VIRHE: kuvaus liian pitkä" if description else "VIRHE: ei kuvausta")
         return redirect("/new_item/")
+
     location = request.form["location"]
     if len(location) > 50:
-        if description:
-            flash("VIRHE: paikkakunnan nimi liian pitkä")
+        flash("VIRHE: paikkakunnan nimi liian pitkä")
         return redirect("/new_item/")
+
     user_id = session["user_id"]
     if not user_id:
         flash("VIRHE: et ole kirjautunut sisään")
@@ -134,17 +130,11 @@ def create_application():
 
     description = request.form["application_desc"]
     if not description or len(description) > 500:
-        if description:
-            flash("VIRHE: kuvaus liian pitkä")
-            return redirect("/item/" + str(item_id))
-        flash("VIRHE: ei kuvausta")
+        flash("VIRHE: kuvaus liian pitkä" if description else "VIRHE: ei kuvausta")
         return redirect("/item/" + str(item_id))
     title = request.form["application_title"]
     if not title or len(title) > 50:
-        if title:
-            flash("VIRHE: otsikko liian pitkä")
-            return redirect("/item/" + str(item_id))
-        flash("VIRHE: ei otsikkoa")
+        flash("VIRHE: otsikko liian pitkä" if title else "VIRHE: ei otsikkoa")
         return redirect("/item/" + str(item_id))
     item = items.get_item(item_id)
     if not item:
@@ -268,17 +258,11 @@ def update_item():
 
     title = request.form["title"]
     if not title or len(title) > 50:
-        if title:
-            flash("VIRHE: otsikko liian pitkä")
-            return redirect("/edit_item/" + str(item_id))
-        flash("VIRHE: ei otsikkoa")
+        flash("VIRHE: otsikko liian pitkä" if title else "VIRHE: ei otsikkoa")
         return redirect("/edit_item/" + str(item_id))
     description = request.form["description"]
     if not description or len(description) > 500:
-        if description:
-            flash("VIRHE: kuvaus liian pitkä")
-            return redirect("/edit_item/" + str(item_id))
-        flash("VIRHE: ei kuvausta")
+        flash("VIRHE: kuvaus liian pitkä" if description else "VIRHE: ei kuvausta")
         return redirect("/edit_item/" + str(item_id))
     location = request.form["location"]
 
@@ -315,17 +299,11 @@ def show_user(user_id):
 def create():
     username = request.form["username"]
     if not username or len(username) > 30:
-        if username:
-            flash("VIRHE: käyttäjätunnus liian pitkä")
-            return redirect("/register")
-        flash("VIRHE: syötä käyttäjätunnus")
+        flash("VIRHE: syötä käyttäjätunnus" if not username else "VIRHE: käyttäjätunnus liian pitkä")
         return redirect("/register")
     password1 = request.form["password1"]
     if not password1 or len(password1) > 30:
-        if password1:
-            flash("VIRHE: salasana liian pitkä")
-            return redirect("/register")
-        flash("VIRHE: syötä salasana")
+        flash("VIRHE: syötä salasana" if not password1 else "VIRHE: salasana liian pitkä")
         return redirect("/register")
     password2 = request.form["password2"]
     if password1 != password2:
@@ -348,17 +326,11 @@ def login():
     if request.method == "POST":
         username = request.form["username"]
         if not username or len(username) > 30:
-            if username:
-                flash("VIRHE: käyttäjätunnus liian pitkä")
-                return redirect("/register")
-            flash("VIRHE: syötä käyttäjätunnus")
+            flash("VIRHE: syötä käyttäjätunnus" if not username else "VIRHE: käyttäjätunnus liian pitkä")
             return redirect("/register")
         password = request.form["password"]
         if not password or len(password) > 30:
-            if password:
-                flash("VIRHE: salasana liian pitkä")
-                return redirect("/register")
-            flash("VIRHE: syötä salasana")
+            flash("VIRHE: syötä salasana" if not password else "VIRHE: salasana liian pitkä")
             return redirect("/register")
 
         user_id = users.check_login(username, password)

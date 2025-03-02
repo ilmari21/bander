@@ -7,7 +7,7 @@
 
 <form action="/create" method="post">
   <p>
-    <label for="username">Tunnus</label>: <br />
+    <label for="username">Käyttäjätunnus</label>: <br />
     <input type="text" name="username" id="username" maxlength="30" required/>
   </p>
   <p>
@@ -17,6 +17,18 @@
   <p>
     <label for="password2">Salasana uudestaan</label>: <br />
     <input type="password" name="password2" id="password2" maxlength="30" required/>
+  </p>
+  <p>
+    <label for="first_name">Etunimi</label>: <br />
+    <input type="text" name="first_name" id="first_name" maxlength="30" required/>
+  </p>
+  <p>
+    <label for="last_name">Sukunimi</label>: <br />
+    <input type="text" name="last_name" id="last_name" maxlength="30" required/>
+  </p>
+  <p>
+    <label for="description">Kuvaus</label>: <br />
+    <input type="text" name="description" id="description" maxlength="200" required/>
   </p>
   <input type="submit" value="Luo tunnus" />
 </form>

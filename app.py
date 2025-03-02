@@ -309,13 +309,25 @@ def create():
     if password1 != password2:
         flash("VIRHE: salasanat eivät ole samat")
         return redirect("/register")
+    first_name = request.form["first_name"]
+    if not first_name or len(first_name) > 30:
+        flash("VIRHE: syötä etunimi" if not first_name else "VIRHE: etunimi liian pitkä")
+        return redirect("/register")
+    last_name = request.form["last_name"]
+    if not last_name or len(last_name) > 30:
+        flash("VIRHE: syötä sukunimi" if not last_name else "VIRHE: sukunimi liian pitkä")
+        return redirect("/register")
+    description = request.form["description"]
+    if not description or len(description) > 200:
+        flash("VIRHE: ei kuvausta" if not description else "VIRHE: kuvaus liian pitkä")
+        return redirect("/register")
 
     try:
-        users.create_user(username, password1)
+        users.create_user(username, first_name, last_name, password1)
     except sqlite3.IntegrityError:
         flash("VIRHE: tunnus on jo varattu")
         return redirect("/register")
-    flash("Tunnus luotu")
+    flash("Käyttäjä luotu")
     return redirect("/")
 
 @app.route("/login", methods=["GET", "POST"])

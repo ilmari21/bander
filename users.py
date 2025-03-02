@@ -2,7 +2,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import db
 
 def get_user(user_id):
-    sql = """SELECT id, username
+    sql = """SELECT id, username, first_name, last_name
              FROM users
              WHERE id = ?"""
     result = db.query(sql, [user_id])
@@ -15,10 +15,10 @@ def get_user_items(user_id):
              ORDER BY id DESC"""
     return db.query(sql, [user_id])
 
-def create_user(username, password):
+def create_user(username, first_name, last_name, password):
     password_hash = generate_password_hash(password)
-    sql = "INSERT INTO users (username, password_hash) VALUES (?, ?)"
-    db.execute(sql, [username, password_hash])
+    sql = "INSERT INTO users (username, first_name, last_name, password_hash) VALUES (?, ?, ?, ?)"
+    db.execute(sql, [username, first_name, last_name, password_hash])
 
 def check_login(username, password):
     sql = "SELECT id, password_hash FROM users WHERE username = ?"

@@ -1,12 +1,12 @@
 import sqlite3
+import secrets
 from flask import Flask
 from flask import redirect, render_template, request, session, abort, make_response, flash
+import markupsafe
 import config
 import items
 import users
 import db
-import secrets
-import markupsafe
 
 app = Flask(__name__)
 app.secret_key = config.secret_key
@@ -117,6 +117,8 @@ def create_application():
     requires_login()
     check_csrf()
 
+    item_id = request.form["item_id"]
+
     description = request.form["application_desc"]
     if not description or len(description) > 500:
         if description:
@@ -124,6 +126,7 @@ def create_application():
         else:
             flash("VIRHE: ei kuvausta")
         return redirect("/item/" + str(item_id))
+
     title = request.form["application_title"]
     if not title or len(title) > 50:
         if title:
@@ -131,7 +134,7 @@ def create_application():
         else:
             flash("VIRHE: ei otsikkoa")
         return redirect("/item/" + str(item_id))
-    item_id = request.form["item_id"]
+
     item = items.get_item(item_id)
     if not item:
         abort(404)
@@ -235,8 +238,7 @@ def delete_item(item_id):
         if "delete" in request.form:
             items.delete_item(item_id)
             return redirect("/")
-        else:
-            return redirect("/item/" + str(item_id))
+        return redirect("/item/" + str(item_id))
 
 @app.route("/update_item", methods=["POST"])
 def update_item():
@@ -274,8 +276,7 @@ def update_item():
         if "update" in request.form:
             items.update_item(item_id, title, description, location, classes)
             return redirect("/item/" + str(item_id))
-        else:
-            return redirect("/item/" + str(item_id))
+        return redirect("/item/" + str(item_id))
 
 @app.route("/register")
 def register():
@@ -306,7 +307,6 @@ def create():
     except sqlite3.IntegrityError:
         flash("VIRHE: tunnus on jo varattu")
         return redirect("/register")
-
     flash("Tunnus luotu")
     return redirect("/")
 
@@ -330,9 +330,8 @@ def login():
             session["username"] = username
             session["csrf_token"] = secrets.token_hex(16)
             return redirect("/")
-        else:
-            flash("VIRHE: väärä tunnus tai salasana")
-            return redirect("/login")
+        flash("VIRHE: väärä tunnus tai salasana")
+        return redirect("/login")
 
 @app.route("/logout")
 def logout():

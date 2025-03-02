@@ -30,7 +30,7 @@ def show_lines(content):
 @app.route("/")
 def index():
     all_items = items.get_items()
-    return render_template("index.html", items = all_items)
+    return render_template("index.html", items=all_items)
 
 @app.route("/search_item/")
 def search_item():
@@ -40,7 +40,7 @@ def search_item():
     else:
         query = ""
         results = []
-    return render_template("search_item.html", query = query, results = results)
+    return render_template("search_item.html", query=query, results=results)
 
 @app.route("/item/<int:item_id>")
 def show_item(item_id):
@@ -50,7 +50,7 @@ def show_item(item_id):
     classes = items.get_classes(item_id)
     applications = items.get_applications(item_id)
     sound_samples = items.get_sound_samples(item_id)
-    return render_template("show_item.html", item = item, classes = classes, applications = applications, sound_samples = sound_samples)
+    return render_template("show_item.html", item=item, classes=classes, applications=applications, sound_samples=sound_samples)
 
 @app.route("/sound_sample/<int:sound_sample_id>")
 def show_sound_sample(sound_sample_id):
@@ -70,13 +70,13 @@ def show_application(application_id):
         application = application[0]
     else:
         abort(404)
-    return render_template("show_application.html", application = application)
+    return render_template("show_application.html", application=application)
 
 @app.route("/new_item")
 def new_item():
     requires_login()
     classes = items.get_all_classes()
-    return render_template("new_item.html", classes = classes)
+    return render_template("new_item.html", classes=classes)
 
 @app.route("/create_item", methods=["POST"])
 def create_item():
@@ -159,7 +159,7 @@ def edit_item(item_id):
     for entry in items.get_classes(item_id):
         classes[entry["title"]] = entry["value"]
 
-    return render_template("edit_item.html", item = item, classes = classes, all_classes = all_classes)
+    return render_template("edit_item.html", item=item, classes=classes, all_classes=all_classes)
 
 @app.route("/sound_samples/<int:item_id>")
 def edit_sound_samples(item_id):
@@ -173,7 +173,7 @@ def edit_sound_samples(item_id):
 
     sound_samples = items.get_sound_samples(item_id)
 
-    return render_template("sound_samples.html", item = item, sound_samples = sound_samples)
+    return render_template("sound_samples.html", item=item, sound_samples=sound_samples)
 
 @app.route("/add_sound_sample", methods=["POST"])
 def add_sound_sample():
@@ -228,7 +228,7 @@ def delete_item(item_id):
         abort(403)
 
     if request.method == "GET":
-        return render_template("delete_item.html", item = item)
+        return render_template("delete_item.html", item=item)
 
     if request.method == "POST":
         check_csrf()
@@ -286,7 +286,7 @@ def show_user(user_id):
     user = users.get_user(user_id)
     if not user:
         abort(404)
-    return render_template("show_user.html", user = user, items = users.get_user_items(user_id))
+    return render_template("show_user.html", user=user, items=users.get_user_items(user_id))
 
 @app.route("/create", methods=["POST"])
 def create():

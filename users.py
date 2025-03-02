@@ -1,5 +1,5 @@
-import db
 from werkzeug.security import generate_password_hash, check_password_hash
+import db
 
 def get_user(user_id):
     sql = """SELECT id, username
@@ -32,5 +32,4 @@ def check_login(username, password):
 
     if check_password_hash(password_hash, password):
         return user_id
-    else:
-        return None
+    return None

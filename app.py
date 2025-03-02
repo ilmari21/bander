@@ -87,15 +87,15 @@ def create_item():
     if not title or len(title) > 50:
         if title:
             flash("VIRHE: otsikko liian pitkä")
-        else:
-            flash("VIRHE: ei otsikkoa")
+            return redirect("/new_item/")
+        flash("VIRHE: ei otsikkoa")
         return redirect("/new_item/")
     description = request.form["description"]
     if not description or len(description) > 500:
         if description:
             flash("VIRHE: kuvaus liian pitkä")
-        else:
-            flash("VIRHE: ei kuvausta")
+            return redirect("/new_item/")
+        flash("VIRHE: ei kuvausta")
         return redirect("/new_item/")
     location = request.form["location"]
     if len(location) > 50:
@@ -136,15 +136,15 @@ def create_application():
     if not description or len(description) > 500:
         if description:
             flash("VIRHE: kuvaus liian pitkä")
-        else:
-            flash("VIRHE: ei kuvausta")
+            return redirect("/item/" + str(item_id))
+        flash("VIRHE: ei kuvausta")
         return redirect("/item/" + str(item_id))
     title = request.form["application_title"]
     if not title or len(title) > 50:
         if title:
             flash("VIRHE: otsikko liian pitkä")
-        else:
-            flash("VIRHE: ei otsikkoa")
+            return redirect("/item/" + str(item_id))
+        flash("VIRHE: ei otsikkoa")
         return redirect("/item/" + str(item_id))
     item = items.get_item(item_id)
     if not item:
@@ -271,17 +271,15 @@ def update_item():
         if title:
             flash("VIRHE: otsikko liian pitkä")
             return redirect("/edit_item/" + str(item_id))
-        else:
-            flash("VIRHE: ei otsikkoa")
-            return redirect("/edit_item/" + str(item_id))
+        flash("VIRHE: ei otsikkoa")
+        return redirect("/edit_item/" + str(item_id))
     description = request.form["description"]
     if not description or len(description) > 500:
         if description:
             flash("VIRHE: kuvaus liian pitkä")
             return redirect("/edit_item/" + str(item_id))
-        else:
-            flash("VIRHE: ei kuvausta")
-            return redirect("/edit_item/" + str(item_id))
+        flash("VIRHE: ei kuvausta")
+        return redirect("/edit_item/" + str(item_id))
     location = request.form["location"]
 
     all_classes = items.get_all_classes()
@@ -320,17 +318,15 @@ def create():
         if username:
             flash("VIRHE: käyttäjätunnus liian pitkä")
             return redirect("/register")
-        else:
-            flash("VIRHE: syötä käyttäjätunnus")
-            return redirect("/register")
+        flash("VIRHE: syötä käyttäjätunnus")
+        return redirect("/register")
     password1 = request.form["password1"]
     if not password1 or len(password1) > 30:
         if password1:
             flash("VIRHE: salasana liian pitkä")
             return redirect("/register")
-        else:
-            flash("VIRHE: syötä salasana")
-            return redirect("/register")
+        flash("VIRHE: syötä salasana")
+        return redirect("/register")
     password2 = request.form["password2"]
     if password1 != password2:
         flash("VIRHE: salasanat eivät ole samat")
@@ -355,17 +351,15 @@ def login():
             if username:
                 flash("VIRHE: käyttäjätunnus liian pitkä")
                 return redirect("/register")
-            else:
-                flash("VIRHE: syötä käyttäjätunnus")
-                return redirect("/register")
+            flash("VIRHE: syötä käyttäjätunnus")
+            return redirect("/register")
         password = request.form["password"]
         if not password or len(password) > 30:
             if password:
                 flash("VIRHE: salasana liian pitkä")
                 return redirect("/register")
-            else:
-                flash("VIRHE: syötä salasana")
-                return redirect("/register")
+            flash("VIRHE: syötä salasana")
+            return redirect("/register")
 
         user_id = users.check_login(username, password)
 
